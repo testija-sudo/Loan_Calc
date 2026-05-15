@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Free Loan Calculator – Monthly Payment, Amortization Schedule & Charts</title>
+  <meta name="description" content="Calculate your loan monthly payment instantly. Get a full amortization schedule, interest breakdown charts, and understand the true cost of any loan – mortgage, auto, personal or student." />
+  <meta name="keywords" content="loan calculator, amortization schedule, mortgage calculator, monthly payment calculator, interest calculator, personal loan calculator" />
+  <meta name="robots" content="index, follow" />
+  <meta property="og:title" content="Free Loan Calculator – Instant Monthly Payment & Amortization" />
+  <meta property="og:description" content="Calculate your loan payment, see a full amortization table and interactive charts. Free, fast and no sign-up required." />
+  <meta property="og:type" content="website" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ============================================================
+       HEADER
+  ============================================================ -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="/" class="logo" aria-label="LoanCalc Home">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+          <rect width="32" height="32" rx="8" fill="url(#logoGrad)"/>
+          <path d="M8 22L14 12l5 7 3-4 5 7" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+          <defs>
+            <linearGradient id="logoGrad" x1="0" y1="0" x2="32" y2="32" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#6366f1"/>
+              <stop offset="1" stop-color="#8b5cf6"/>
+            </linearGradient>
+          </defs>
+        </svg>
+        <span>LoanCalc</span>
+      </a>
+      <nav class="header-nav" aria-label="Main navigation">
+        <a href="#calculator">Calculator</a>
+        <a href="#amortization">Schedule</a>
+        <a href="#guide">Guide</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ============================================================
+       HERO
+  ============================================================ -->
+  <section class="hero" aria-label="Hero section">
+    <div class="hero-bg" aria-hidden="true">
+      <div class="hero-orb hero-orb-1"></div>
+      <div class="hero-orb hero-orb-2"></div>
+      <div class="hero-orb hero-orb-3"></div>
+    </div>
+    <div class="container hero-content">
+      <div class="hero-badge">100% Free • No Sign-Up Required</div>
+      <h1>Loan Calculator</h1>
+      <p class="hero-subtitle">Calculate your monthly payment, total interest, and get a full amortization schedule in seconds. Works for mortgages, auto loans, personal loans and more.</p>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       AD ZONE – TOP BANNER (728×90 leaderboard / responsive)
+  ============================================================ -->
+  <div class="ad-zone ad-zone--leaderboard" aria-label="Advertisement">
+    <div class="ad-label">Advertisement</div>
+    <!-- Google AdSense code goes here -->
+    <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="XXXXXXXXXX" data-ad-format="auto" data-full-width-responsive="true"></ins> -->
+    <div class="ad-placeholder">
+      <span>Ad · 728×90 Leaderboard</span>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       MAIN LAYOUT – Calculator + Sidebar Ad
+  ============================================================ -->
+  <main id="calculator" class="container main-layout">
+
+    <!-- LEFT COLUMN: Calculator -->
+    <div class="calc-column">
+
+      <!-- Loan Type Tabs -->
+      <div class="card loan-type-card">
+        <h2 class="card-title">Select Loan Type</h2>
+        <div class="loan-tabs" role="tablist" aria-label="Loan type">
+          <button class="loan-tab active" role="tab" aria-selected="true" data-type="mortgage" id="tab-mortgage">🏠 Mortgage</button>
+          <button class="loan-tab" role="tab" aria-selected="false" data-type="auto" id="tab-auto">🚗 Auto</button>
+          <button class="loan-tab" role="tab" aria-selected="false" data-type="personal" id="tab-personal">💳 Personal</button>
+          <button class="loan-tab" role="tab" aria-selected="false" data-type="student" id="tab-student">🎓 Student</button>
+        </div>
+      </div>
+
+      <!-- Inputs Card -->
+      <div class="card inputs-card">
+        <h2 class="card-title">Loan Details</h2>
+
+        <!-- Loan Amount -->
+        <div class="input-group" id="group-amount">
+          <div class="input-row">
+            <label for="loanAmount">Loan Amount</label>
+            <div class="input-value-box">
+              <span class="currency-symbol">$</span>
+              <input type="number" id="loanAmount" value="250000" min="1000" max="10000000" step="1000" aria-label="Loan amount in dollars" />
+            </div>
+          </div>
+          <input type="range" id="loanAmountSlider" min="1000" max="2000000" step="1000" value="250000" class="slider" aria-label="Loan amount slider" />
+          <div class="slider-labels">
+            <span>$1K</span><span>$2M</span>
+          </div>
+        </div>
+
+        <!-- Interest Rate -->
+        <div class="input-group" id="group-rate">
+          <div class="input-row">
+            <label for="interestRate">Annual Interest Rate</label>
+            <div class="input-value-box">
+              <input type="number" id="interestRate" value="6.5" min="0.1" max="30" step="0.1" aria-label="Annual interest rate percentage" />
+              <span class="currency-symbol">%</span>
+            </div>
+          </div>
+          <input type="range" id="interestRateSlider" min="0.1" max="30" step="0.1" value="6.5" class="slider" aria-label="Interest rate slider" />
+          <div class="slider-labels">
+            <span>0.1%</span><span>30%</span>
+          </div>
+        </div>
+
+        <!-- Loan Term -->
+        <div class="input-group" id="group-term">
+          <div class="input-row">
+            <label for="loanTerm">Loan Term</label>
+            <div class="input-value-box">
+              <input type="number" id="loanTerm" value="30" min="1" max="30" step="1" aria-label="Loan term in years" />
+              <span class="currency-symbol">yrs</span>
+            </div>
+          </div>
+          <input type="range" id="loanTermSlider" min="1" max="30" step="1" value="30" class="slider" aria-label="Loan term slider" />
+          <div class="slider-labels">
+            <span>1 yr</span><span>30 yrs</span>
+          </div>
+        </div>
+
+        <!-- Calculate Button -->
+        <button class="btn-calculate" id="calculateBtn" aria-label="Calculate loan">Calculate Now</button>
+      </div>
+
+      <!-- Results Card -->
+      <div class="card results-card" id="resultsCard">
+        <h2 class="card-title">Your Results</h2>
+        <div class="results-grid">
+          <div class="result-item result-item--primary">
+            <div class="result-label">Monthly Payment</div>
+            <div class="result-value" id="monthlyPayment">$1,580.17</div>
+          </div>
+          <div class="result-item">
+            <div class="result-label">Total Principal</div>
+            <div class="result-value result-value--sm" id="totalPrincipal">$250,000</div>
+          </div>
+          <div class="result-item">
+            <div class="result-label">Total Interest</div>
+            <div class="result-value result-value--sm result-value--accent" id="totalInterest">$318,860</div>
+          </div>
+          <div class="result-item">
+            <div class="result-label">Total Cost of Loan</div>
+            <div class="result-value result-value--sm" id="totalCost">$568,860</div>
+          </div>
+        </div>
+
+        <!-- Progress bar: principal vs interest -->
+        <div class="cost-breakdown" aria-label="Cost breakdown">
+          <div class="breakdown-bar">
+            <div class="bar-principal" id="barPrincipal" style="width: 44%"></div>
+            <div class="bar-interest" id="barInterest" style="width: 56%"></div>
+          </div>
+          <div class="breakdown-legend">
+            <span class="legend-dot legend-dot--principal"></span>Principal
+            <span class="legend-dot legend-dot--interest"></span>Interest
+          </div>
+        </div>
+      </div>
+
+      <!-- Charts Card -->
+      <div class="card charts-card">
+        <div class="chart-tabs" role="tablist" aria-label="Chart type">
+          <button class="chart-tab active" data-chart="balance" role="tab" id="ctab-balance">Balance Over Time</button>
+          <button class="chart-tab" data-chart="pie" role="tab" id="ctab-pie">Principal vs Interest</button>
+          <button class="chart-tab" data-chart="payment" role="tab" id="ctab-payment">Payment Breakdown</button>
+        </div>
+        <div class="chart-container">
+          <canvas id="balanceChart" aria-label="Loan balance over time chart"></canvas>
+          <canvas id="pieChart" style="display:none;" aria-label="Principal vs interest pie chart"></canvas>
+          <canvas id="paymentChart" style="display:none;" aria-label="Payment breakdown chart"></canvas>
+        </div>
+      </div>
+
+      <!-- AD ZONE – IN-CONTENT (after charts, before amortization table) -->
+      <div class="ad-zone ad-zone--in-content" aria-label="Advertisement">
+        <div class="ad-label">Advertisement</div>
+        <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="XXXXXXXXXX" data-ad-format="auto" data-full-width-responsive="true"></ins> -->
+        <div class="ad-placeholder">
+          <span>Ad · In-Content Responsive</span>
+        </div>
+      </div>
+
+      <!-- Amortization Table -->
+      <div class="card amortization-card" id="amortization">
+        <div class="amort-header">
+          <h2 class="card-title">Amortization Schedule</h2>
+          <button class="btn-export" id="exportCsvBtn" aria-label="Export amortization schedule as CSV">⬇ Export CSV</button>
+        </div>
+        <p class="amort-desc">Each row shows how your monthly payment is split between principal and interest, and your remaining balance.</p>
+
+        <div class="table-wrapper" role="region" aria-label="Amortization schedule table">
+          <table id="amortTable" aria-label="Amortization schedule">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Month</th>
+                <th scope="col">Payment</th>
+                <th scope="col">Principal</th>
+                <th scope="col">Interest</th>
+                <th scope="col">Balance</th>
+              </tr>
+            </thead>
+            <tbody id="amortBody">
+              <!-- populated by JS -->
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Pagination -->
+        <div class="pagination" id="pagination" aria-label="Table pagination">
+          <button class="page-btn" id="prevPage" aria-label="Previous page">← Prev</button>
+          <span class="page-info" id="pageInfo">Page 1 of 30</span>
+          <button class="page-btn" id="nextPage" aria-label="Next page">Next →</button>
+        </div>
+      </div>
+
+      <!-- ============================================================
+           SEO CONTENT SECTION
+      ============================================================ -->
+      <section class="content-section" id="guide" aria-labelledby="guide-heading">
+        <h2 id="guide-heading">How to Use the Loan Calculator</h2>
+        <p>Our free loan calculator helps you quickly understand the true cost of borrowing money. Whether you're planning to take out a <strong>mortgage</strong>, finance a new car, or cover personal expenses, knowing your monthly payment and total interest upfront can save you thousands of dollars.</p>
+
+        <h3>Step 1: Enter Your Loan Amount</h3>
+        <p>Type the amount you wish to borrow or use the slider to adjust. For home mortgages, this is typically the home price minus your down payment. For auto loans, it's the vehicle price minus any trade-in value or down payment.</p>
+
+        <h3>Step 2: Set the Interest Rate</h3>
+        <p>Enter your annual interest rate (APR). This is provided by your lender and varies based on your credit score, loan type, and market conditions. As of 2024, average mortgage rates are around 6–7%, while personal loan rates typically range from 8–25%.</p>
+
+        <h3>Step 3: Choose the Loan Term</h3>
+        <p>Select how many years you'll take to repay the loan. A <strong>longer term</strong> means lower monthly payments but significantly more interest paid over the life of the loan. A <strong>shorter term</strong> means higher payments but less total interest.</p>
+
+        <h3>Understanding the Amortization Schedule</h3>
+        <p>An amortization schedule shows every single payment you'll make over the life of the loan. In the early months, most of your payment goes toward interest. As time goes on, more and more of each payment goes toward reducing the principal balance. This is called <em>front-loaded interest</em> and is standard for all fixed-rate loans.</p>
+
+        <div class="info-box">
+          <strong>💡 Pro Tip:</strong> Making just one extra payment per year can reduce a 30-year mortgage by 4–6 years and save tens of thousands in interest.
+        </div>
+
+        <h3>How Monthly Payments Are Calculated</h3>
+        <p>The standard formula for a fixed-rate loan monthly payment is:</p>
+        <div class="formula-box" aria-label="Loan payment formula">
+          <strong>M = P × [r(1+r)ⁿ] / [(1+r)ⁿ − 1]</strong>
+          <ul>
+            <li><strong>M</strong> = Monthly payment</li>
+            <li><strong>P</strong> = Principal loan amount</li>
+            <li><strong>r</strong> = Monthly interest rate (annual rate ÷ 12)</li>
+            <li><strong>n</strong> = Total number of payments (years × 12)</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- AD ZONE – MID CONTENT -->
+      <div class="ad-zone ad-zone--in-content" aria-label="Advertisement">
+        <div class="ad-label">Advertisement</div>
+        <div class="ad-placeholder">
+          <span>Ad · In-Content Responsive</span>
+        </div>
+      </div>
+
+      <!-- FAQ Section -->
+      <section class="content-section" id="faq" aria-labelledby="faq-heading">
+        <h2 id="faq-heading">Frequently Asked Questions</h2>
+
+        <div class="faq-list">
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false" id="faq1-btn" aria-controls="faq1-answer">
+              What is a good interest rate for a loan?
+              <span class="faq-icon" aria-hidden="true">+</span>
+            </button>
+            <div class="faq-answer" id="faq1-answer" role="region" aria-labelledby="faq1-btn">
+              <p>A "good" interest rate depends on the loan type and your credit score. For mortgages in 2024, rates below 6.5% are considered competitive. For personal loans, anything below 10% is generally favorable. Auto loans from dealerships often range from 4–8% for buyers with good credit. Always compare offers from multiple lenders.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false" id="faq2-btn" aria-controls="faq2-answer">
+              Should I choose a 15-year or 30-year mortgage?
+              <span class="faq-icon" aria-hidden="true">+</span>
+            </button>
+            <div class="faq-answer" id="faq2-answer" role="region" aria-labelledby="faq2-btn">
+              <p>A 15-year mortgage has a higher monthly payment but you'll pay far less interest overall — often less than half the total interest of a 30-year loan. A 30-year mortgage has lower monthly payments, freeing up cash for investments or emergencies. Use our calculator to compare both options side-by-side.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false" id="faq3-btn" aria-controls="faq3-answer">
+              What happens if I make extra payments?
+              <span class="faq-icon" aria-hidden="true">+</span>
+            </button>
+            <div class="faq-answer" id="faq3-answer" role="region" aria-labelledby="faq3-btn">
+              <p>Extra payments go directly toward reducing your principal balance, which reduces the amount of interest you'll pay going forward. Even one extra payment per year can shorten a 30-year mortgage by 4–6 years and save $30,000–$60,000+ in interest depending on your loan size and rate.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false" id="faq4-btn" aria-controls="faq4-answer">
+              What is APR vs. interest rate?
+              <span class="faq-icon" aria-hidden="true">+</span>
+            </button>
+            <div class="faq-answer" id="faq4-answer" role="region" aria-labelledby="faq4-btn">
+              <p>The interest rate is the base cost of borrowing money. APR (Annual Percentage Rate) includes the interest rate plus any fees, points, or other costs, making it a more complete picture of the true cost of a loan. When comparing lenders, always compare APRs, not just interest rates.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false" id="faq5-btn" aria-controls="faq5-answer">
+              How does my credit score affect my loan rate?
+              <span class="faq-icon" aria-hidden="true">+</span>
+            </button>
+            <div class="faq-answer" id="faq5-answer" role="region" aria-labelledby="faq5-btn">
+              <p>Your credit score is one of the biggest factors lenders use to determine your interest rate. A score above 760 typically qualifies for the best rates. A score between 620–679 may still qualify for a loan but at a significantly higher rate — sometimes 1–3% more. On a $300,000 mortgage, a 1% higher rate can cost over $60,000 in extra interest over 30 years.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false" id="faq6-btn" aria-controls="faq6-answer">
+              Is this loan calculator accurate?
+              <span class="faq-icon" aria-hidden="true">+</span>
+            </button>
+            <div class="faq-answer" id="faq6-answer" role="region" aria-labelledby="faq6-btn">
+              <p>Yes — our calculator uses the standard amortization formula used by banks and lenders worldwide. Results are accurate for fixed-rate loans. Note that our calculator does not include property taxes, homeowner's insurance, or PMI for mortgages, which would increase your actual monthly cost. Always confirm figures with your lender.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div><!-- end calc-column -->
+
+    <!-- RIGHT COLUMN: Sticky Sidebar Ad -->
+    <aside class="sidebar-column" aria-label="Sidebar advertisements">
+      <!-- AD ZONE – Sidebar (300×600 or 300×250) -->
+      <div class="ad-zone ad-zone--sidebar sticky-ad" aria-label="Advertisement">
+        <div class="ad-label">Advertisement</div>
+        <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="XXXXXXXXXX" data-ad-format="auto"></ins> -->
+        <div class="ad-placeholder ad-placeholder--tall">
+          <span>Ad · 300×600 Sidebar</span>
+        </div>
+      </div>
+
+      <!-- Quick Tips Widget -->
+      <div class="widget-card">
+        <h3 class="widget-title">💡 Money-Saving Tips</h3>
+        <ul class="tips-list">
+          <li>A 0.5% lower rate on a $300K loan saves ~$30K over 30 years.</li>
+          <li>Pay bi-weekly instead of monthly to make one extra payment per year.</li>
+          <li>Refinancing when rates drop can save thousands.</li>
+          <li>A 20% down payment avoids costly PMI insurance.</li>
+          <li>Shop at least 3 lenders before committing.</li>
+        </ul>
+      </div>
+
+      <!-- AD ZONE – Second Sidebar -->
+      <div class="ad-zone ad-zone--sidebar" aria-label="Advertisement">
+        <div class="ad-label">Advertisement</div>
+        <div class="ad-placeholder">
+          <span>Ad · 300×250 Sidebar</span>
+        </div>
+      </div>
+    </aside>
+
+  </main>
+
+  <!-- ============================================================
+       FOOTER AD + FOOTER
+  ============================================================ -->
+  <div class="ad-zone ad-zone--leaderboard" aria-label="Advertisement">
+    <div class="ad-label">Advertisement</div>
+    <div class="ad-placeholder">
+      <span>Ad · 728×90 Footer Leaderboard</span>
+    </div>
+  </div>
+
+  <footer class="site-footer" role="contentinfo">
+    <div class="container footer-inner">
+      <div class="footer-logo">
+        <svg width="24" height="24" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+          <rect width="32" height="32" rx="8" fill="url(#footerLogoGrad)"/>
+          <path d="M8 22L14 12l5 7 3-4 5 7" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+          <defs>
+            <linearGradient id="footerLogoGrad" x1="0" y1="0" x2="32" y2="32" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#6366f1"/>
+              <stop offset="1" stop-color="#8b5cf6"/>
+            </linearGradient>
+          </defs>
+        </svg>
+        <span>LoanCalc</span>
+      </div>
+      <p class="footer-disclaimer">This calculator is for informational purposes only and does not constitute financial advice. Always consult with a qualified financial professional before making borrowing decisions. Calculations assume a fixed interest rate and do not include taxes, insurance, or fees.</p>
+      <p class="footer-copyright">© 2025 LoanCalc. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
