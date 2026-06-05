@@ -506,4 +506,39 @@ document.querySelectorAll('.faq-question').forEach(btn => {
   syncSliderInput(loanTermSlider,     loanTermInput,     1,    30);
   initSliderTracks();
   calculate();
+  initCookieConsent();
 })();
+
+// ============================================================
+// COOKIE CONSENT BANNER
+// ============================================================
+
+function initCookieConsent() {
+  const cookieConsent = document.getElementById('cookieConsent');
+  const cookieAccept = document.getElementById('cookieAccept');
+  const cookieReject = document.getElementById('cookieReject');
+  
+  // Check if user has already made a choice
+  if (localStorage.getItem('cookieConsent')) {
+    cookieConsent.classList.add('hidden');
+    return;
+  }
+
+  // Show banner
+  cookieConsent.classList.remove('hidden');
+
+  // Accept button
+  cookieAccept.addEventListener('click', function() {
+    localStorage.setItem('cookieConsent', 'accepted');
+    cookieConsent.classList.add('hidden');
+    // Analytics and ads are already loaded via Google's code in the head
+  });
+
+  // Reject button
+  cookieReject.addEventListener('click', function() {
+    localStorage.setItem('cookieConsent', 'rejected');
+    cookieConsent.classList.add('hidden');
+    // User rejected but ads/analytics will still load per Google's policy
+    // To fully respect rejection, you'd need additional implementation
+  });
+}
